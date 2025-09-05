@@ -1,0 +1,6 @@
+sidrapy
+pysus
+pandas
+numpy
+matplotlib
+
