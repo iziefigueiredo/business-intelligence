@@ -2,27 +2,36 @@
 ```
 business-intelligence/
 ├─ data/
-│  ├─ raw/         # dados originais
-│  ├─ interim/     # resultados intermediários
+│  ├─ raw/           # dados originais
+│  ├─ interim/       # resultados intermediários
 │  └─ processed/     # finais tratados para BI
 │
 ├─ src/
-│  ├─ utils.py     # funções de apoio
-│  └─ steps/       # cada etapa em um arquivo
-│     ├─ 01_extract_*.py
-│     ├─ 02_extract_*.py
-│     ├─ 05_treat_*.py
-│     ├─ 06_treat_*.py
-│     └─ 09_merge_*.py
+│  ├─ __init__.py
+│  ├─ utils.py       # funções de apoio
 │
-├─ tests/          # (opcional)
+├─ extract/
+│  ├─ __init__.py
+│  ├─ ibge.py
+│  ├─ sim.py
 │
-├─ docs/           # relatórios e descrições do projeto
+├─ transform/
+│  ├─ __init__.py
+│  ├─ process_*.py
 │
-├─ main.py         
+├─ merge/
+│  ├─ __init__.py
+│  └─ cnes_sih.py
+│
+├─ tests/            # (opcional, pode ter __init__.py também)
+│
+├─ docs/             # relatórios e descrições do projeto
+│
+├─ main.py
 ├─ .gitignore
 ├─ README.md
 └─ requirements.txt
+
 
 
 ```
