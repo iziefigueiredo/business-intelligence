@@ -1,40 +1,92 @@
 import pandas as pd
 from pathlib import Path
 
-# Função para renomear colunas do csv PIB
-def rename_select(df: pd.DataFrame) -> pd.DataFrame:
-     df_final = df[[
-        "V",
-        "D1N",
-        "D1C",
-        "D2C"
-    ]].rename(columns={
-        "V": "pib",
-        "D1N": "municipio",
-        "D1C": "cod_mun",
-        "D2C": "ano",
-    })
-     return df_final
+
+def clean_columns(df: pd.DataFrame, rename_map: dict) -> pd.DataFrame:
+    """
+    Seleciona e renomeia colunas de um DataFrame com base em um dicionário de mapeamento.
+    """
+    colunas_desejadas = list(rename_map.keys())
+    
+    # Filtra as colunas que realmente existem no DataFrame
+    cols_exist = [c for c in colunas_desejadas if c in df.columns]
+    
+    if not cols_exist:
+        raise ValueError("Nenhuma das colunas desejadas foi encontrada.")
+        
+    # Seleciona as colunas existentes e as renomeia
+    df_clean = df[cols_exist].rename(columns=rename_map)
+    return df_clean
 
 
-def clean_columns(df: pd.DataFrame, columns: str) -> pd.DataFrame:
-    df[columns] = df[columns].str.split('-').str[0].str.strip()
+def limpar_municipio(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """
+    Remove a sigla do estado e espaços em branco extras do nome do município.
+    """
+    df[coluna] = df[coluna].str.split('-').str[0].str.strip()
     return df
 
-pasta_raw = Path("data/raw/")
-arquivo_raw = pasta_raw / "pib_municipios.csv"
-df_pib = pd.read_csv(arquivo_raw)
 
-# Renomeia as colunas
-df_pib_renomeado = rename_select(df_pib)
-df_pib_renomeado = clean_columns(df_pib_renomeado, "municipio")
+def processar_salvar(
+    arquivo_entrada: str, 
+    arquivo_saida: str, 
+    renome_map: dict
+):
+    """
+    Processa e salva um arquivo CSV, usando as funções de limpeza.
+    """
+    dir_entrada = Path("data/raw/")
+    dir_entrada.mkdir(parents=True, exist_ok=True)
 
-# Define a pasta e o caminho do arquivo processado
-pasta_interim = Path("data/interim/")
-pasta_interim.mkdir(parents=True, exist_ok=True)
-arquivo_interim = pasta_interim / "pib_municipios.csv"
+    dir_saida = Path("data/interim/")
+    dir_saida.mkdir(parents=True, exist_ok=True)
 
-# Salva o DataFrame processado
-df_pib_renomeado.to_csv(arquivo_interim, index=False)
+    arquivo_entrada_path = dir_entrada / arquivo_entrada
+    arquivo_saida_path = dir_saida / arquivo_saida
+    
+    try:
+        tabela = pd.read_csv(arquivo_entrada_path, encoding="utf-8")
+    except FileNotFoundError:
+        print(f"Erro: Arquivo não encontrado em {arquivo_entrada_path}")
+        return
 
-print(f"O arquivo foi salvo com sucesso em: {arquivo_interim.resolve()}")
+    #  Renomeia as colunas
+    df_renomeado = clean_columns(tabela, renome_map)
+    
+    #  Limpa o nome do município
+    df_final = limpar_municipio(df_renomeado, "municipio")
+
+    #  Salva o resultado final
+    df_final.to_csv(arquivo_saida_path, index=False, encoding="utf-8")
+    
+    print(f"Salvo: {arquivo_saida_path} | Linhas: {len(df_final)} | Colunas: {list(df_final.columns)}")
+
+
+# ===== Mapeamento de colunas para cada fonte de dados =====
+RENOME_MAP_PIB = {      
+    "V":   "pib",
+    "D1N": "municipio",
+    "D1C": "cod_mun",
+    "D2C": "ano",
+}
+
+RENOME_MAP_POPULACAO = {     
+    "V":   "populacao",
+    "D1N": "municipio",
+    "D1C": "cod_mun",
+    "D2C": "ano",
+}
+
+# ===== Execução principal =====
+if __name__ == "__main__":
+    processar_salvar(
+        arquivo_entrada="pib_municipios.csv",
+        arquivo_saida="pib_limpo.csv",
+        renome_map=RENOME_MAP_PIB
+    )
+
+    processar_salvar(
+        arquivo_entrada="populacao_municipios.csv",
+        arquivo_saida="populacao_limpo.csv",
+        renome_map=RENOME_MAP_POPULACAO
+    )
