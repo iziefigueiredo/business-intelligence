@@ -12,7 +12,7 @@ def run():
         table_code="5938",
         territorial_level="6",        # municípios
         ibge_territorial_code="all",
-        variable="37",                # PIB a preços correntes
+        variable="37",                # PIB 
         period="last 1",              # último ano disponível
         header="n",
         format="pandas",
@@ -20,6 +20,8 @@ def run():
     out_pib = pasta / "pib_municipios.csv"
     df_pib.to_csv(out_pib, index=False, encoding="utf-8")
     print(df_pib.shape, "- salvo em", out_pib.resolve())
+
+
 
     # População dos Municípios (tabela 6579)
     df_pop = sidrapy.get_table(

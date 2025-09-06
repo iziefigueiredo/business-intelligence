@@ -10,7 +10,7 @@ def run():
     pasta.mkdir(parents=True, exist_ok=True)
 
     # Define os anos 
-    anos = list(range(2018,2021 ))  
+    anos = list(range(2018,2021))  
 
 
     arquivos_baixar = []
