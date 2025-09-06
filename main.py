@@ -22,7 +22,6 @@ EXTRACT_STEPS = [
     "src.extract.sim:run",
 ]
 
-# Deixe preparado para quando criar os módulos de transformação
 # TRANSFORM_STEPS = [
 #     "src.transform.processing_sim:run",
 #     "src.transform.processing_sim:run",
