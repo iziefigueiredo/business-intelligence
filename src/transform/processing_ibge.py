@@ -2,14 +2,19 @@ import pandas as pd
 from pathlib import Path
 
 # Função para renomear colunas do csv PIB
-def rename_columns(df: pd.DataFrame) -> pd.DataFrame:
-    df = df.rename(columns={
+def rename_select(df: pd.DataFrame) -> pd.DataFrame:
+     df_final = df[[
+        "V",
+        "D1N",
+        "D1C",
+        "D2C"
+    ]].rename(columns={
         "V": "pib",
         "D1N": "municipio",
         "D1C": "cod_mun",
         "D2C": "ano",
     })
-    return df
+     return df_final
 
 pasta_raw = Path("data/raw/")
 arquivo_raw = pasta_raw / "pib_municipios.csv"
