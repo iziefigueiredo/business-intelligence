@@ -28,7 +28,7 @@ def run():
         table_code="6579",
         territorial_level="6",        # municípios
         ibge_territorial_code="all",
-        period="last 1",
+        period="2021",
         header="n",
         format="pandas",
     )
