@@ -1,37 +1,17 @@
-# main.py — menu simples: [1] Extrair dados | [2] Tratar dados (comentado)
+# main.py — menu de etapas do pipeline
 import sys
 from pathlib import Path
-from importlib import import_module
 
-# garante que a raiz do projeto está no sys.path
-sys.path.insert(0, str(Path(__file__).parent.resolve()))
-
-def run_callable(spec: str):
-    """
-    spec no formato 'pacote.modulo:funcao'
-    ex.: 'src.extract.ibge:run'
-    """
-    mod_name, func_name = spec.split(":")
-    mod = import_module(mod_name)
-    fn = getattr(mod, func_name)
-    fn()
-
-# ==== pipelines =====
-EXTRACT_STEPS = [
-    "src.extract.ibge:run",
-    "src.extract.sim:run",
-]
-
-# TRANSFORM_STEPS = [
-#     "src.transform.processing_sim:run",
-#     "src.transform.processing_sim:run",
-#     
-# ]
+# --- Importações diretas dos módulos de todo o pipeline ---
+# Garante que as importações funcionem a partir da raiz do projeto
+from src.extract import ibge, sim
+from src.transform import processing_ibge, processing_sim
+#from src.merge import unify
 
 def menu():
     while True:
         print("\n=== MENU BI ===")
-        print("[1] Extrair dados (IBGE + SIM)")
+        print("[1] Extrair dados (IBGE e SIM)")
         print("[2] Tratar dados ")
         print("[0] Sair")
         op = input("Escolha: ").strip()
@@ -39,12 +19,33 @@ def menu():
         if op == "0":
             break
         elif op == "1":
-            for spec in EXTRACT_STEPS:
-                run_callable(spec)
+            print("=== Extrair dados ===")
+            ibge.run()
+            sim.run()
         elif op == "2":
-            print("Opção de tratamento ainda desabilitada.")
-            # for spec in TRANSFORM_STEPS:
-            #     run_callable(spec)
+            print("=== Tratar dados ===")
+            # === Chamada direta das funções de tratamento ===
+            processing_ibge.processar_salvar(
+                arquivo_entrada="pib_municipios.csv",
+                arquivo_saida="pib_limpo.csv",
+                renome_map={
+                    "V": "pib",
+                    "D1N": "municipio",
+                    "D1C": "cod_mun",
+                    "D2C": "ano",
+                }
+            )
+            processing_ibge.processar_salvar(
+                arquivo_entrada="populacao_municipios.csv",
+                arquivo_saida="populacao_limpo.csv",
+                renome_map={
+                    "V": "populacao",
+                    "D1N": "municipio",
+                    "D1C": "cod_mun",
+                    "D2C": "ano",
+                }
+            )
+            processing_sim.processar_sim()
         else:
             print("Opção inválida.")
 
