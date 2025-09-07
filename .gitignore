@@ -1,4 +1,4 @@
-# Ignorar ambiente virtual
+# ignore virtual environment directories
 .venv/
 venv/
 
@@ -16,3 +16,6 @@ __pycache__/
 
 # Logs
 *.log
+
+# files to ignore
+data/
