@@ -8,7 +8,8 @@ business-intelligence/
 │
 ├─ src/
 │  ├─ __init__.py
-│  ├─ utils.py       # funções de apoio
+│  ├─ pipeline_sim.py       
+│  ├─ pipeline_ibge.py
 │
 ├─ extract/
 │  ├─ __init__.py
