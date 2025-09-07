@@ -6,13 +6,16 @@ from pathlib import Path
 # Garante que as importações funcionem a partir da raiz do projeto
 from src.extract import ibge, sim
 from src.transform import processing_ibge, processing_sim
-#from src.merge import unify
+from src.merge import unify_sim
+
 
 def menu():
     while True:
         print("\n=== MENU BI ===")
         print("[1] Extrair dados (IBGE e SIM)")
-        print("[2] Tratar dados ")
+        print("[2] Unificar dados")
+        print("[3] Tratar dados")
+
         print("[0] Sair")
         op = input("Escolha: ").strip()
 
@@ -22,7 +25,16 @@ def menu():
             print("=== Extrair dados ===")
             ibge.run()
             sim.run()
+        
+        
         elif op == "2":
+            print("=== Unificar dados ===")
+            # Chama a função de unificação
+            unify_sim.unify_sim()
+               
+        
+        
+        elif op == "3":
             print("=== Tratar dados ===")
             # === Chamada direta das funções de tratamento ===
             processing_ibge.processar_salvar(
@@ -46,6 +58,7 @@ def menu():
                 }
             )
             processing_sim.processar_sim()
+        
         else:
             print("Opção inválida.")
 
