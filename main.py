@@ -10,7 +10,7 @@ if project_root not in sys.path:
 
 # Importa as funções de cada pipeline
 from src.pipeline_sim import run_pipeline_sim
-# from src.pipeline_ibge import run_pipeline_ibge # Adicione essa linha quando criar o arquivo
+from src.pipeline_ibge import run_pipeline_ibge 
 
 def menu():
     """
@@ -30,7 +30,7 @@ def menu():
                 run_pipeline_sim()
             elif escolha == "2":
                 print("Pipeline do IBGE ainda não implementado. Por favor, escolha a opção 1.")
-                # run_pipeline_ibge() # Descomente essa linha quando o arquivo for criado
+                run_pipeline_ibge() 
             elif escolha == "0":
                 print("Encerrando o orquestrador.")
                 break
