@@ -29,6 +29,7 @@ business-intelligence/
 │
 ├─ docs/             # relatórios e descrições do projeto
 │
+├─ __init__.py
 ├─ main.py
 ├─ .gitignore
 ├─ README.md
