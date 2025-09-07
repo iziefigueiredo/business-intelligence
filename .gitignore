@@ -2,20 +2,22 @@
 .venv/
 venv/
 
-# Cache do Python
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Arquivos de configuração locais
+# Local configuration files
 .env
 
-# Checkpoints do Jupyter
+# Jupyter notebooks checkpoints
 .ipynb_checkpoints/
 
-# Logs
+# Log files
 *.log
 
-# files to ignore
-data/
+# Data files to ignore
+data/raw/
+data/interim/
+data/processed/

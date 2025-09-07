@@ -1,12 +1,18 @@
-# pipeline_sim.py
+# src/pipeline_sim.py
 
-import pandas as pd
+import sys
 from pathlib import Path
 
-# --- Importações ---
-from extract import sim as extract_sim
-from merge import unify_sim as unify_sim
-from transform import processing_sim as process_sim
+# Adiciona a raiz do projeto ao caminho de importação
+# Isso é crucial para que o script encontre os módulos, não importa onde ele seja executado
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+# Importa as funções de cada etapa do pipeline
+from src.extract import sim as extract_sim
+from src.merge import unify_sim 
+from src.transform import processing_sim
 
 def run_pipeline_sim():
     """
@@ -24,7 +30,7 @@ def run_pipeline_sim():
     
     # Etapa 3: Processamento (Limpeza e tratamento)
     print("Executando a etapa de Processamento...")
-    process_sim.processar_sim()
+    processing_sim.processed_sim()
     
     print("--- Pipeline do SIM concluído com sucesso! ---")
 

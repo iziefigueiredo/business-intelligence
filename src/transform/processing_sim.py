@@ -1,16 +1,16 @@
 import pandas as pd
 from pathlib import Path
 
-def processar_sim():
+def processed_sim():
     """
     Carrega, seleciona colunas e salva os dados do SIM.
     """
     # Define o arquivo de entrada e de saída
     dir_entrada = Path("data/interim/")
-    dir_saida = Path("data/interim/")
+    dir_saida = Path("data/processed/")
     
     arquivo_entrada = dir_entrada / "sim_unified.csv"
-    arquivo_saida = dir_saida / "sim_limpo.csv"
+    arquivo_saida = dir_saida / "sim.csv"
 
     # Garante que os diretórios de saída existem
     dir_saida.mkdir(parents=True, exist_ok=True)
@@ -23,7 +23,7 @@ def processar_sim():
 
     # Carrega o arquivo unificado
     try:
-        tabela = pd.read_csv(arquivo_entrada)
+        tabela = pd.read_csv(arquivo_entrada, low_memory=False)
     except FileNotFoundError:
         print(f"Erro: Arquivo não encontrado em {arquivo_entrada}")
         return
@@ -39,4 +39,4 @@ def processar_sim():
     print(f"Colunas salvas: {colunas_existentes}")
 
 if __name__ == "__main__":
-    processar_sim()
+    processed_sim()
