@@ -17,11 +17,13 @@ business-intelligence/
 │
 ├─ transform/
 │  ├─ __init__.py
-│  ├─ process_*.py
+│  ├─ processing_sim.py
+│  ├─ processing_ibge.py
 │
 ├─ merge/
 │  ├─ __init__.py
-│  └─ cnes_sih.py
+│  ├─ unify_ibge.py
+│  └─ unify_sim.py
 │
 ├─ tests/            # (opcional, pode ter __init__.py também)
 │
