@@ -81,12 +81,12 @@ RENOME_MAP_POPULACAO = {
 if __name__ == "__main__":
     processar_salvar(
         arquivo_entrada="pib_municipios.csv",
-        arquivo_saida="pib_limpo.csv",
+        arquivo_saida="pib_clean.csv",
         renome_map=RENOME_MAP_PIB
     )
 
     processar_salvar(
         arquivo_entrada="populacao_municipios.csv",
-        arquivo_saida="populacao_limpo.csv",
+        arquivo_saida="populacao_clean.csv",
         renome_map=RENOME_MAP_POPULACAO
     )
