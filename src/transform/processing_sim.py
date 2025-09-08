@@ -21,6 +21,16 @@ class SIMProcessor:
         # Ensure output dir exists
         self.out_dir.mkdir(parents=True, exist_ok=True)
 
+    
+    
+    def convert_date(self, df):
+        """Convert DTOBITO and DTNASC to datetime."""
+        df["DTOBITO"] = pd.to_datetime(df["DTOBITO"], errors="coerce", format="%Y-%m-%d")
+        df["DTNASC"]  = pd.to_datetime(df["DTNASC"],  errors="coerce", format="%Y-%m-%d")
+        return df
+
+    
+    
     def load(self):
         """Load SIM CSV."""
         try:
