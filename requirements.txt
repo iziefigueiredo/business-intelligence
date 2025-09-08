@@ -3,4 +3,5 @@ pysus
 pandas
 numpy
 matplotlib
+ydata-profiling
 
