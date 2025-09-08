@@ -49,7 +49,7 @@ class SIMProcessor:
         return df_final
         
     def convert_date(self, df):
-        """DTOBITO and DTNASC -> dd/mm/yy from YYYYMMDD."""
+        """DTOBITO and DTNASC -> dd/mm/yy"""
         if df.empty:
             return pd.DataFrame()
         
