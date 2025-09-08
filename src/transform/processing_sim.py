@@ -68,6 +68,36 @@ class SIMProcessor:
             df["HORAOBITO"] = df["HORAOBITO"].str.zfill(4)
             df["HORAOBITO"] = pd.to_datetime(df["HORAOBITO"], format="%H%M", errors="coerce").dt.strftime("%H:%M")
         return df
+    
+
+    def accident_type(self, df):
+        """Classify accident type based on CAUSABAS."""
+        if df.empty:
+            return pd.DataFrame()
+
+        # Create a new column with default value
+        df['TIPO_ACIDENTE'] = 'Outras causas'
+      
+         # Pedestre: V01-V09
+        df.loc[df['CAUSABAS'].str.match(r'V0[1-9]', na=False), 'TIPO_ACIDENTE'] = 'Pedestre'
+        # Ciclista: V10-V19
+        df.loc[df['CAUSABAS'].str.match(r'V1[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Ciclista'
+        # Motociclista: V20-V29
+        df.loc[df['CAUSABAS'].str.match(r'V2[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Motociclista'
+        # Ocupante de automóvel: V40-V49
+        df.loc[df['CAUSABAS'].str.match(r'V4[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Ocupante de automovel'
+        # Ocupante de caminhonete: V50-V59
+        df.loc[df['CAUSABAS'].str.match(r'V5[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Ocupante de caminhonete'
+        # Ocupante de veiculo de transporte pesado: V60-V69
+        df.loc[df['CAUSABAS'].str.match(r'V6[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Ocupante de veiculo de transporte pesado'
+        # Ocupante de onibus: V70-V79
+        df.loc[df['CAUSABAS'].str.match(r'V7[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Ocupante de onibus'
+        # Outros acidentes de transporte terrestre: V80-V89
+        df.loc[df['CAUSABAS'].str.match(r'V8[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Outros acidentes de transporte terrestre'
+        # Acidentes de transporte por agua, aereo, espacial e outros nao especificados: V90-V99
+        df.loc[df['CAUSABAS'].str.match(r'V9[0-9]', na=False), 'TIPO_ACIDENTE'] = 'Outros'
+        
+        return df    
 
     def save(self, df):
         if df.empty:
@@ -87,7 +117,7 @@ class SIMProcessor:
         df = self.filter(df)
         df = self.convert_date(df)
         df = self.convert_time(df)
-        
+        df = self.accident_type(df)
         self.save(df)
         return df
 
