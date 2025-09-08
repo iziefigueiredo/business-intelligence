@@ -26,6 +26,11 @@ business-intelligence/
 │  ├─ unify_ibge.py
 │  └─ unify_sim.py
 │
+├─ eda/
+│  ├─ __init__.py
+│  ├─ profile_sim.py
+│  ├─ profile_ibge.py
+│
 ├─ tests/            # (opcional, pode ter __init__.py também)
 │
 ├─ docs/             # relatórios e descrições do projeto

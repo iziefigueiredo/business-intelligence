@@ -1,92 +1,88 @@
 import pandas as pd
 from pathlib import Path
 
+class IBGEProcessor:
+    """Processes and saves IBGE data."""
 
-def clean_columns(df: pd.DataFrame, rename_map: dict) -> pd.DataFrame:
-    """
-    Seleciona e renomeia colunas de um DataFrame com base em um dicionário de mapeamento.
-    """
-    colunas_desejadas = list(rename_map.keys())
-    
-    # Filtra as colunas que realmente existem no DataFrame
-    cols_exist = [c for c in colunas_desejadas if c in df.columns]
-    
-    if not cols_exist:
-        raise ValueError("Nenhuma das colunas desejadas foi encontrada.")
+    def __init__(self, in_dir="data/raw/", out_dir="data/interim/"):
+        self.in_dir = Path(in_dir)
+        self.out_dir = Path(out_dir)
+        self.out_dir.mkdir(parents=True, exist_ok=True)
+
+        self.RENAME_MAP_PIB = {      
+            "V": "pib",
+            "D1N": "municipio",
+            "D1C": "cod_mun",
+            "D2C": "ano",
+        }
+
+        self.RENAME_MAP_POPULATION = {     
+            "V": "populacao",
+            "D1N": "municipio",
+            "D1C": "cod_mun",
+            "D2C": "ano",
+        }
+
+    def clean_columns(self, df: pd.DataFrame, rename_map: dict) -> pd.DataFrame:
+        """
+        Selects and renames columns of a DataFrame based on a mapping dictionary.
+        """
+        desired_columns = list(rename_map.keys())
+        existing_cols = [c for c in desired_columns if c in df.columns]
         
-    # Seleciona as colunas existentes e as renomeia
-    df_clean = df[cols_exist].rename(columns=rename_map)
-    return df_clean
+        if not existing_cols:
+            raise ValueError("None of the desired columns were found.")
+            
+        df_clean = df[existing_cols].rename(columns=rename_map)
+        return df_clean
 
+    def clean_municipio(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
+        """
+        Removes the state acronym and extra whitespace from the municipality name.
+        """
+        df[column] = df[column].str.split('-').str[0].str.strip()
+        return df
 
-def limpar_municipio(df: pd.DataFrame, coluna: str) -> pd.DataFrame:
-    """
-    Remove a sigla do estado e espaços em branco extras do nome do município.
-    """
-    df[coluna] = df[coluna].str.split('-').str[0].str.strip()
-    return df
-
-
-def processar_salvar(
-    arquivo_entrada: str, 
-    arquivo_saida: str, 
-    renome_map: dict
-):
-    """
-    Processa e salva um arquivo CSV, usando as funções de limpeza.
-    """
-    dir_entrada = Path("data/raw/")
-    dir_entrada.mkdir(parents=True, exist_ok=True)
-
-    dir_saida = Path("data/interim/")
-    dir_saida.mkdir(parents=True, exist_ok=True)
-
-    arquivo_entrada_path = dir_entrada / arquivo_entrada
-    arquivo_saida_path = dir_saida / arquivo_saida
+ 
+        
+        
     
-    try:
-        tabela = pd.read_csv(arquivo_entrada_path, encoding="utf-8")
-    except FileNotFoundError:
-        print(f"Erro: Arquivo não encontrado em {arquivo_entrada_path}")
-        return
+    def process_and_save(self, input_file: str, output_file: str, rename_map: dict):
+        """
+        Loads, processes, and saves a CSV file.
+        """
+        input_path = self.in_dir / input_file
+        output_path = self.out_dir / output_file
+        
+        try:
+            table = pd.read_csv(input_path, encoding="utf-8")
+        except FileNotFoundError:
+            print(f"Error: File not found in {input_path}")
+            return
 
-    #  Renomeia as colunas
-    df_renomeado = clean_columns(tabela, renome_map)
-    
-    #  Limpa o nome do município
-    df_final = limpar_municipio(df_renomeado, "municipio")
+        df_renamed = self.clean_columns(table, rename_map)
+        df_final = self.clean_municipio(df_renamed, "municipio")
 
-    #  Salva o resultado final
-    df_final.to_csv(arquivo_saida_path, index=False, encoding="utf-8")
-    
-    print(f"Salvo: {arquivo_saida_path} | Linhas: {len(df_final)} | Colunas: {list(df_final.columns)}")
+        df_final.to_csv(output_path, index=False, encoding="utf-8")
+        
+        print(f"Saved: {output_path} | Rows: {len(df_final)} | Columns: {list(df_final.columns)}")
 
+    def run(self):
+        """
+        Executes the full IBGE data processing pipeline.
+        """
+        self.process_and_save(
+            input_file="pib_municipios.csv",
+            output_file="pib_clean.csv",
+            rename_map=self.RENAME_MAP_PIB
+        )
 
-# ===== Mapeamento de colunas para cada fonte de dados =====
-RENOME_MAP_PIB = {      
-    "V":   "pib",
-    "D1N": "municipio",
-    "D1C": "cod_mun",
-    "D2C": "ano",
-}
+        self.process_and_save(
+            input_file="populacao_municipios.csv",
+            output_file="populacao_clean.csv",
+            rename_map=self.RENAME_MAP_POPULATION
+        )
 
-RENOME_MAP_POPULACAO = {     
-    "V":   "populacao",
-    "D1N": "municipio",
-    "D1C": "cod_mun",
-    "D2C": "ano",
-}
-
-# ===== Execução principal =====
 if __name__ == "__main__":
-    processar_salvar(
-        arquivo_entrada="pib_municipios.csv",
-        arquivo_saida="pib_clean.csv",
-        renome_map=RENOME_MAP_PIB
-    )
-
-    processar_salvar(
-        arquivo_entrada="populacao_municipios.csv",
-        arquivo_saida="populacao_clean.csv",
-        renome_map=RENOME_MAP_POPULACAO
-    )
+    processor = IBGEProcessor()
+    processor.run()
