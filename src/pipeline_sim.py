@@ -12,7 +12,7 @@ if project_root not in sys.path:
 # Importa as funções de cada etapa do pipeline
 from src.extract import sim as extract_sim
 from src.merge import unify_sim 
-from src.transform import processing_sim
+from src.transform.processing_sim import SIMProcessor 
 
 def run_pipeline_sim():
     """
@@ -30,7 +30,8 @@ def run_pipeline_sim():
     
     # Etapa 3: Processamento (Limpeza e tratamento)
     print("Executando a etapa de Processamento...")
-    processing_sim.processed_sim()
+    sim = SIMProcessor()
+    sim.run()
     
     print("--- Pipeline do SIM concluído com sucesso! ---")
 

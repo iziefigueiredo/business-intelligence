@@ -1,42 +1,58 @@
 import pandas as pd
 from pathlib import Path
 
-def processed_sim():
+class SIMProcessor:
     """
-    Carrega, seleciona colunas e salva os dados do SIM.
+    Class to process SIM data.
     """
-    # Define o arquivo de entrada e de saída
-    dir_entrada = Path("data/interim/")
-    dir_saida = Path("data/processed/")
-    
-    arquivo_entrada = dir_entrada / "sim_unified.csv"
-    arquivo_saida = dir_saida / "sim.csv"
 
-    # Garante que os diretórios de saída existem
-    dir_saida.mkdir(parents=True, exist_ok=True)
+    def __init__(self, in_dir="data/interim/", out_dir="data/processed/"):
+        self.in_dir = Path(in_dir)
+        self.out_dir = Path(out_dir)
+        self.in_file = self.in_dir / "sim_unified.csv"
+        self.out_file = self.out_dir / "sim.csv"
 
-    # Lista das colunas que você quer manter
-    colunas_desejadas = [
-        "DTOBITO", "HORAOBITO", "CAUSABAS", "DTNASC", "SEXO", "IDADE", "RACACOR", "ESC",
-        "CODMUNRES", "CODMUNOCOR"
-    ]
+        # Columns to keep
+        self.keep_cols = [
+            "DTOBITO", "HORAOBITO", "CAUSABAS", "DTNASC", "SEXO",
+            "IDADE", "RACACOR", "ESC", "CODMUNRES", "CODMUNOCOR"
+        ]
 
-    # Carrega o arquivo unificado
-    try:
-        tabela = pd.read_csv(arquivo_entrada, low_memory=False)
-    except FileNotFoundError:
-        print(f"Erro: Arquivo não encontrado em {arquivo_entrada}")
-        return
+        # Ensure output dir exists
+        self.out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Seleciona apenas as colunas desejadas que existem na tabela
-    colunas_existentes = [c for c in colunas_desejadas if c in tabela.columns]
-    tabela_final = tabela[colunas_existentes]
+    def load(self):
+        """Load SIM CSV."""
+        try:
+            df = pd.read_csv(self.in_file, low_memory=False)
+            print(f"Loaded file: {self.in_file.resolve()}")
+            return df
+        except FileNotFoundError:
+            print(f"Error: file not found → {self.in_file}")
+            return None
 
-    # Salva o resultado final com a seleção de colunas
-    tabela_final.to_csv(arquivo_saida, index=False, encoding="utf-8")
+    def filter(self, df):
+        """Filter only existing keep_cols."""
+        cols = [c for c in self.keep_cols if c in df.columns]
+        df_final = df[cols]
+        print(f"Cols kept: {cols}")
+        return df_final
 
-    print(f"Dados filtrados salvos em: {arquivo_saida.resolve()}")
-    print(f"Colunas salvas: {colunas_existentes}")
+    def save(self, df):
+        """Save processed CSV."""
+        df.to_csv(self.out_file, index=False, encoding="utf-8")
+        print(f"Saved file: {self.out_file.resolve()}")
+
+    def run(self):
+        """Run full pipeline."""
+        df = self.load()
+        if df is None:
+            return None
+        df_final = self.filter(df)
+        self.save(df_final)
+        return df_final
+
 
 if __name__ == "__main__":
-    processed_sim()
+    sim = SIMProcessor()
+    sim.run()
