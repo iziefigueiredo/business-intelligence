@@ -18,7 +18,6 @@ class SIMProcessor:
             "SEXO": "SEXO",
             "IDADE": "IDADE",
             "RACACOR": "RACACOR",
-            "ESC": "ESC",
             "CODMUNRES": "CODMUNRES",
             "CODMUNOCOR": "CODMUNOCOR"
         }
