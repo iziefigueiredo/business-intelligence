@@ -55,7 +55,7 @@ class SIMProcessor:
         
         for col in ["DTOBITO", "DTNASC"]:
             if col in df.columns:
-                df[col] = pd.to_datetime(df[col], format="%Y%m%d", errors="coerce").dt.strftime("%d/%m/%y")
+                df[col] = pd.to_datetime(df[col], format="%d%m%Y", errors="coerce").dt.strftime("%d/%m/%y")
         return df
 
     def convert_time(self, df):
