@@ -47,7 +47,7 @@ class IBGEProcessor:
         
         
     
-    def process_and_save(self, input_file: str, output_file: str, rename_map: dict):
+    def process_save(self, input_file: str, output_file: str, rename_map: dict):
         """
         Loads, processes, and saves a CSV file.
         """
@@ -71,7 +71,7 @@ class IBGEProcessor:
         """
         Executes the full IBGE data processing pipeline.
         """
-        self.process_and_save(
+        self.process_save(
             input_file="pib_municipios.csv",
             output_file="pib_clean.csv",
             rename_map=self.RENAME_MAP_PIB
