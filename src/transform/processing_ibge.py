@@ -77,7 +77,7 @@ class IBGEProcessor:
             rename_map=self.RENAME_MAP_PIB
         )
 
-        self.process_and_save(
+        self.process_save(
             input_file="populacao_municipios.csv",
             output_file="populacao_clean.csv",
             rename_map=self.RENAME_MAP_POPULATION

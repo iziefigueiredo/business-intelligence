@@ -5,7 +5,7 @@ import pandas as pd
 from pathlib import Path
 from ydata_profiling import ProfileReport
 
-def generate_profile_ibge():
+def profile_ibge():
     """
     Carrega o DataFrame unificado do IBGE e gera um relatório de perfil de dados.
     """
@@ -36,4 +36,4 @@ def generate_profile_ibge():
 
 
 if __name__ == "__main__":
-    generate_profile_ibge()
+    profile_ibge()
