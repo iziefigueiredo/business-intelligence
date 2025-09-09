@@ -13,6 +13,7 @@ if project_root not in sys.path:
 from src.extract import sim as extract_sim
 from src.merge import unify_sim 
 from src.transform.processing_sim import SIMProcessor 
+from src.eda import profile_sim as eda_sim
 
 def run_pipeline_sim():
     """
@@ -32,6 +33,10 @@ def run_pipeline_sim():
     print("Executando a etapa de Processamento...")
     sim = SIMProcessor()
     sim.run()
+
+    #Etapa 4: Análise Exploratória de Dados (EDA)
+    print("Executando a etapa de Análise Exploratória de Dados (EDA)...")
+    eda_sim.profile_sim()
     
     print("--- Pipeline do SIM concluído com sucesso! ---")
 
