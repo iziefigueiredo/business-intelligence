@@ -58,7 +58,7 @@ class SIMProcessor:
         if df.empty:
             return pd.DataFrame()
         
-        for col in ["DTOBITO", "DTNASC"]:
+        for col in ["DTOBITO"]:
             if col in df.columns:
                 df[col] = pd.to_datetime(df[col], format="%d%m%Y", errors="coerce").dt.strftime("%d/%m/%y")
         return df
