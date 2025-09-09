@@ -27,7 +27,7 @@ def profile_sim():
         return
 
     # Gera o relatório de perfil
-    profile = ProfileReport(df, title="Relatório de Perfil de Dados do IBGE")
+    profile = ProfileReport(df, title="Relatório de Perfil de Dados do SIM")
 
     # Salva o relatório como um arquivo HTML
     profile.to_file(output_file)

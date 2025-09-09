@@ -14,7 +14,6 @@ class SIMProcessor:
             "DTOBITO": "DTOBITO",
             "HORAOBITO": "HORAOBITO",
             "CAUSABAS": "CAUSABAS",
-            "DTNASC": "DTNASC",
             "SEXO": "SEXO",
             "IDADE": "IDADE",
             "RACACOR": "RACACOR",
@@ -45,6 +44,12 @@ class SIMProcessor:
             print("Warning: None of the desired columns were found.")
         
         df_final = df_filtered.loc[:, cols].copy()
+        
+        #Drop duplicates and reset index
+        df_final = df_final.drop_duplicates().reset_index(drop=True)
+        #Drop rows with all NaN values
+        df_final = df_final.dropna(how='all')
+
         print(f"Columns kept: {cols}")
         return df_final
         
@@ -57,6 +62,48 @@ class SIMProcessor:
             if col in df.columns:
                 df[col] = pd.to_datetime(df[col], format="%d%m%Y", errors="coerce").dt.strftime("%d/%m/%y")
         return df
+    
+    def convert_age(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Converte a idade de acordo com a lógica fornecida.
+        - Se a idade for menor que 400, o valor será 0.
+        - Se a idade for maior que 400, o valor será  idade - 400.
+        """
+        if 'IDADE' not in df.columns or df.empty:
+            return df
+
+        df['IDADE_AJUSTADA'] = 0
+
+        # Aplica a lógica condicional
+        df.loc[df['IDADE'] >= 400, 'IDADE_AJUSTADA'] = df['IDADE'] - 400
+
+        # Remove a coluna original 'IDADE' e renomeia a nova
+        df = df.drop(columns=['IDADE'])
+        df.rename(columns={'IDADE_AJUSTADA': 'IDADE'}, inplace=True)
+    
+        return df
+    
+    def handle_outliers(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Substitui valores de idade acima de 130 anos pela média das idades válidas.
+        """
+        if 'IDADE' not in df.columns or df.empty:
+            return df
+
+        # Calcula a média das idades válidas (menores ou iguais a 130)
+        # A media é calculada apenas em valores validos para não ser afetada pelos outliers.
+        mean_age = df.loc[df['IDADE'] <= 130, 'IDADE'].mean()
+
+        # Substitui os valores acima de 130 pela média
+        df.loc[df['IDADE'] > 130, 'IDADE'] = mean_age
+
+        # Converte a coluna de idade para inteiro
+        # Primeiro, preenche NaNs que possam ter sido criados pela media, depois converte.
+        df['IDADE'] = df['IDADE'].fillna(mean_age).astype(int)
+
+        return df
+       
+          
 
     def convert_time(self, df):
         """HORAOBITO -> HH:MM from HHMM."""
@@ -118,6 +165,8 @@ class SIMProcessor:
         df = self.convert_date(df)
         df = self.convert_time(df)
         df = self.accident_type(df)
+        df = self.convert_age(df)
+        df = self.handle_outliers(df)
         self.save(df)
         return df
 
