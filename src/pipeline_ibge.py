@@ -10,7 +10,7 @@ if project_root not in sys.path:
 
 # Importa as funções de cada etapa do pipeline
 from src.extract import ibge as extract_ibge
-from src.transform import processing_ibge as process_ibge
+from src.transform import preprocessing_ibge as preprocess_ibge
 from src.merge import unify_ibge as merge_ibge
 from src.eda import profile_ibge as eda_ibge
 
@@ -29,8 +29,8 @@ def run_pipeline_ibge():
     print("Executando a etapa de Processamento...")
     
     # Cria uma instância da classe IBGEProcessor
-    processor = process_ibge.IBGEProcessor()
-    
+    processor = preprocess_ibge.IBGEProcessor()
+
     # Chama o método de processamento e salvamento através da instância
     processor.process_save(
         input_file="pib_municipios.csv",

@@ -4,7 +4,7 @@ from pathlib import Path
 class IBGEProcessor:
     """Processes and saves IBGE data."""
 
-    def __init__(self, in_dir="data/raw/", out_dir="data/interim/"):
+    def __init__(self, in_dir="data/raw/ibge/", out_dir="data/interim/"):
         self.in_dir = Path(in_dir)
         self.out_dir = Path(out_dir)
         self.out_dir.mkdir(parents=True, exist_ok=True)

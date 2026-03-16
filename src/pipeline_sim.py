@@ -12,7 +12,7 @@ if project_root not in sys.path:
 # Importa as funções de cada etapa do pipeline
 from src.extract import sim as extract_sim
 from src.merge import unify_sim 
-from src.transform.processing_sim import SIMProcessor 
+from src.transform.preprocessing_sim import SIMProcessor 
 from src.eda import profile_sim as eda_sim
 
 def run_pipeline_sim():

@@ -3,7 +3,7 @@
 import pandas as pd
 from pathlib import Path
 
-def unify_sim(pasta_entrada: str = "data/raw/", pasta_saida: str = "data/interim"):
+def unify_sim(pasta_entrada: str = "data/raw/sim/", pasta_saida: str = "data/interim"):
     """
     Unifica todos os arquivos parquet do SIM em um único DataFrame e o salva.
     """

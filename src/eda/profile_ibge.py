@@ -13,7 +13,7 @@ def profile_ibge():
 
     # Path setup
     processed_dir = Path("data/processed/")
-    docs_dir = Path("docs/")
+    docs_dir = Path("reports/")
     docs_dir.mkdir(parents=True, exist_ok=True)
     
     input_file = processed_dir / "ibge.csv"

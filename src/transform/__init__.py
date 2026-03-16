@@ -1,3 +1,3 @@
-from . import processing_ibge, processing_sim
+from . import preprocessing_sim, preprocessing_ibge, preprocessing_cnes
 
-__all__ = ["processing_ibge", "processing_sim"]
+__all__ = ["preprocessing_ibge", "preprocessing_sim", "preprocessing_cnes"]

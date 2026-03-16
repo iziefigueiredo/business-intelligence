@@ -6,11 +6,11 @@ def run():
     sim = SIM().load()
 
     # Define a pasta de destino
-    pasta = Path("data/raw/")
+    pasta = Path("data/raw/sim/")
     pasta.mkdir(parents=True, exist_ok=True)
 
-    # Define os anos 
-    anos = list(range(2018,2021))  
+    # Define os anos
+    anos = list(range(2022, 2023))
 
 
     arquivos_baixar = []

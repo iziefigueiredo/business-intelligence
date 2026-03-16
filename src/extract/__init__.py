@@ -1,4 +1,4 @@
-from . import ibge, sim
+from . import ibge, sim, cnes
 
-__all__ = ["ibge", "sim"]
+__all__ = ["ibge", "sim", "cnes"]
 

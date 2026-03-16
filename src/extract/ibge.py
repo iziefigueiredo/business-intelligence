@@ -4,7 +4,7 @@ from pathlib import Path
 
 def run():
     # Define a pasta de destino
-    pasta = Path("data/raw/")
+    pasta = Path("data/raw/ibge/")
     pasta.mkdir(parents=True, exist_ok=True)
 
     # PIB dos Municípios (tabela 5938, variável 37 = PIB a preços correntes)
