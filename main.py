@@ -11,6 +11,7 @@ if project_root not in sys.path:
 # Importa as funções de cada pipeline
 from src.pipeline_sim import run_pipeline_sim
 from src.pipeline_ibge import run_pipeline_ibge 
+from src.pipeline_cnes import run_pipeline_cnes
 
 def menu():
     """
@@ -20,6 +21,7 @@ def menu():
         print("\n=== MENU BI - ORQUESTRADOR ===")
         print("[1] Executar Pipeline do SIM")
         print("[2] Executar Pipeline do IBGE")
+        print("[3] Executar Pipeline do CNES")
         print("[0] Sair")
         print("=" * 30)
 
@@ -31,6 +33,9 @@ def menu():
             elif escolha == "2":
                 print("Pipeline do IBGE ainda não implementado. Por favor, escolha a opção 1.")
                 run_pipeline_ibge() 
+            elif escolha == "3":
+                print("Pipeline do CNES ainda não implementado. Por favor, escolha a opção 1.")
+                run_pipeline_cnes()
             elif escolha == "0":
                 print("Encerrando o orquestrador.")
                 break

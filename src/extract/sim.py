@@ -1,30 +1,18 @@
-from pysus import SIM
+from pysus.online_data.SIM import SIM
 from pathlib import Path
 
 def run():
-    # Inicializa o SIM
-    sim = SIM().load()
-
-    # Define a pasta de destino
     pasta = Path("data/raw/sim/")
     pasta.mkdir(parents=True, exist_ok=True)
 
-    # Define os anos
-    anos = list(range(2022, 2023))
+    sim = SIM().load()
+    anos = list(range(2018, 2021))
 
-
-    arquivos_baixar = []
-
-    # Busca os arquivos para cada ano e mês
     for ano in anos:
         arquivos = sim.get_files("CID10", uf="RS", year=ano)
-        arquivos_baixar.extend(arquivos)
+        sim.download(arquivos, local_dir=pasta)
 
-    # Faz o download de todos os arquivos para a pasta
-
-    baixados = sim.download(arquivos_baixar, local_dir=pasta)
-
-    print(f"{len(baixados)} arquivos baixados com sucesso!")
+    print("Download concluído!")
 
 if __name__ == "__main__":
     run()
