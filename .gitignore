@@ -17,4 +17,7 @@ __pycache__/
 # Log files
 *.log
 
+data/raw/
+data/interim/
+
 
