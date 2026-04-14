@@ -17,7 +17,7 @@ class SIMProcessor:
             "SEXO": "SEXO",
             "IDADE": "IDADE",
             "RACACOR": "RACACOR",
-            "CODMUNRES": "CODMUNRES",
+            "CODMUNRES": "cod_municipio",
             "CODMUNOCOR": "CODMUNOCOR"
         }
         self.out_dir.mkdir(parents=True, exist_ok=True)

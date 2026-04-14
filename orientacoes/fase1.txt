@@ -1,0 +1,179 @@
+A solução pretendida deve permitir a análise de diferentes indicadores relacionados aos municípios brasileiros. Para tanto, foram pré-selecionadas duas fontes de dados disponibilizadas pelo Governo Federal: 
+
+1. Listagem dos municípios brasileiros, incluindo o código padrão IBGE de identificação dos municípios e a ele associadas informações como nome, estado (UF) e organização em regiões. 
+
+ 
+
+Disponível em: https://www.ibge.gov.br/geociencias/organizacao-do-territorio/estrutura-territorial/23701-divisao-territorial-brasileira.html 
+
+ 
+
+● Após realizar o download do arquivo, abra o .zip e extraia seus arquivos. 
+
+● Abra o arquivo “RELATORIO_DTB_BRASIL_MUNICIPIO.xls” e salve-o no formato .xlsx, a fim de compatibilizá-lo com as versões atuais do Power BI; este arquivo será utilizado na Fase 2 deste projeto. 
+● No próprio Excel, analise as colunas do arquivo para conhecer esta porção dos dados sobre os quais este projeto será desenvolvido. 
+
+● Nesta fonte de dados, a coluna “Código Município Completo” corresponde ao código do município e deverá ser renomeada para “cod_municipio”, na Fase 2 do projeto, durante o processo de ETL. 
+
+ 
+
+2. Divisão territorial dos municípios brasileiros, incluindo o código padrão IBGE de identificação dos municípios e a ele associadas as coordenadas geográficas (latitude e longitude) e altitude de cada um deles. 
+
+ 
+
+Disponível em: https://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/localidades/cadastro_de_localidades_selecionadas_2010/
+Geomedia_MDB/BR_Localidades_2010_v1.mdb
+
+ 
+
+● Para analisar as colunas do arquivo e conhecer esta porção dos dados sobre os quais este projeto será desenvolvido você deverá usar o software Power BI (download gratuito em https://powerbi.microsoft.com/pt-br/desktop/) 
+
+● Abra o Power BI, vá em “Obter dados”, escolha a opção de fonte “Banco de dados do Access” e carregue o arquivo “BR_Localidades_2010_v1.mdb”. 
+
+● Nesta fonte de dados, a coluna “BR_Localidades_2010_v1.COD_GEOCODMU” corresponde ao código padrão IBGE de identificação dos municípios para todos os registros em que “BR_Localidades_2010_v1.CD_NIVEL = 1”. Essa coluna deverá ser renomeada para “cod_municipio”, na Fase 2 do projeto, durante o processo de ETL. 
+
+ 
+
+Recapitulando: essas duas fontes de dados (itens 1 e 2 acima) reúnem diferentes informações sobre cada um dos municípios brasileiros e possuem, cada uma delas, uma coluna, conforme já identificado acima, que indica o código padrão IBGE de identificação dos municípios, que deverá ser renomeada para cod_municipio durante o processo de ETL na Fase 2 do projeto.   
+
+ 
+
+3. Além dessas duas fontes de dados iniciais, você deverá escolher pelo menos mais duas fontes de dados que possuam relação com os municípios brasileiros por meio do código padrão IBGE de identificação dos municípios (cod_municipio, conforme explicado acima). 
+
+ 
+
+Para identificar se a fonte de dados possui realmente o código padrão IBGE de identificação dos municípios (cod_municipio), confira os seguintes dados: 
+
+
+  Nome do Município   
+
+  Estado   
+
+  Código padrão IBGE de identificação dos municípios (cod_municipio)   
+
+  Porto Alegre   
+
+  Rio Grande do Sul   
+
+  4314902   
+
+  Rio de Janeiro   
+
+  Rio de Janeiro   
+
+  3304557   
+
+  São Paulo   
+
+  São Paulo   
+
+  3550308   
+
+  
+
+As fontes de dados podem estar em qualquer formato (banco de dados relacional, CSV, XLSX etc.). 
+
+ 
+
+Exemplos de sites que possuem fontes de dados abertos e de onde os arquivos podem ser baixados.  
+
+ 
+
+● https://www.ibge.gov.br
+
+● https://dados.gov.br
+
+● https://dados.rs.gov.br
+
+● http://www.atlasbrasil.org.br
+● https://pysus.readthedocs.io/en/latest/tutorials/tutorials.html#ibge-data
+
+ 
+
+Cabe ressaltar que os links acima são referentes a fontes de dados externas à universidade e pode haver instabilidade nesses serviços. Nesse caso, insista em outro momento ou escolha outra fonte, dentre as sugeridas. 
+
+
+Para a escolha das duas fontes de dados complementares, você deverá navegar nos sites acima, ou em outros de sua escolha, e procurar pelos arquivos que atenderem ao objetivo do seu projeto.  
+
+ 
+
+No caso das fontes de dados no formato de arquivo seja CSV, XLSX, ou similares, basta você fazer download do arquivo para analisar seu conteúdo e concluir a Fase 1 do projeto, conforme entregas previstas nesta fase. 
+
+ 
+
+No caso de fontes de dados baseadas em SGBDs, optar pela execução das instâncias em containers Docker, conforme os seguintes exemplos: 
+
+ 
+
+# MongoDB 
+
+docker run --name mongodb -d -p 27017:27017 -v mongodb-data:/data/mongodb -e "MONGO_INITDB_ROOT_USERNAME=admin" -e "MONGO_INITDB_ROOT_PASSWORD=aB12345678" mongo:latest 
+
+ 
+
+# MySQL 
+
+docker run --name mysql -d -p 3306:3306 -v mysql-data:/var/lib/mysql -e
+"MYSQL_ROOT_PASSWORD=aB12345678" mysql:latest 
+
+ 
+
+# PostgreSQL 
+
+docker run --name postgresql -d -p 5432:5432 -v postgresql-
+data:/var/lib/postgresql/data -e "POSTGRES_PASSWORD=aB12345678" -e "
+PGDATA=/var/lib/postgresql/data/pgdata" -e "POSTGRES_HOST_AUTH_METHOD=trust" postgres:latest 
+
+ 
+
+# Oracle 
+
+ docker login container-registry.oracle.com/database/enterprise 
+
+ docker run --name oracle -d -p 1522:1521 -p 5500:5500 -e
+"ORACLE_PWD=aB12345678" -v oracle-data:/opt/oracle/oradata container-
+rgistry.oracle.com/database/enterprise:latest 
+
+ 
+
+# SQL Server 
+
+docker run --name sqlserver -d -p 1433:1433 -e "ACCEPT_EULA=Y" -e
+"SA_PASSWORD=aB12345678" -v sqlserver-data:/var/opt/mssql
+mcr.microsoft.com/mssql/server:2022-latest
+
+
+Quais aulas você precisa assistir para realizar a fase 1? Aulas 1 a 5.
+
+O que você precisa entregar?
+
+
+Siga estas instruções cuidadosamente para garantir uma entrega adequada do seu projeto. Você deverá entregar uma pasta compactada no formato ZIP, que deve conter dois elementos principais: 
+
+ 
+
+1. Relatório em formato PDF contendo: 
+
+ 
+
+A. Contextualização: explicação acerca do escopo de aplicação da solução de BI proposta, indicando o contexto de negócio em que se enquadra e quais seus potenciais benefícios para os usuários na tomada de decisões. 
+
+B. Personas: descrição completa dos potenciais usuários da solução (pelo menos duas personas), incluindo suas atribuições e alguns objetivos que visam atingir para melhoria do negócio. 
+
+C. Questões de Negócio: pelo menos duas questões de negócio adequadamente descritas para cada persona proposta. 
+
+D. Fonte de Dados: descrição de cada uma delas (duas fontes de dados pré-selecionadas e duas fontes de dados escolhidas por você nesta Fase 1 do projeto), incluindo os links para download, descrição de cada coluna e, se necessário, por exemplo, no caso de fontes baseadas em bancos de dados, a descrição passo a passo sobre como executar a instância do SGBD utilizando containers Docker e como carregar os dados para essa instância.  
+
+ 
+
+2. Arquivos das fontes de dados e instruções para sua preparação no caso de fontes de dados baseadas em SGBD. 
+
+ 
+
+Observação sobre o Formato de Arquivo: Submeta seu arquivo EXCLUSIVAMENTE no formato ZIP. Outros formatos de arquivos compactados, como RAR, não serão aceitos. 
+
+ 
+
+Por favor, revise sua entrega para garantir que todas essas diretrizes tenham sido seguidas. Bons estudos! 
+
+Material Complementar

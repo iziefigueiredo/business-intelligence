@@ -13,7 +13,7 @@ def run():
         territorial_level="6",        # municípios
         ibge_territorial_code="all",
         variable="37",                # PIB 
-        period="last 1",              # último ano disponível
+        period="last",                # último ano disponível
         header="n",
         format="pandas",
     )
@@ -28,7 +28,7 @@ def run():
         table_code="6579",
         territorial_level="6",        # municípios
         ibge_territorial_code="all",
-        period="2021",
+        period="last",
         header="n",
         format="pandas",
     )

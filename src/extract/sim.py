@@ -6,11 +6,9 @@ def run():
     pasta.mkdir(parents=True, exist_ok=True)
 
     sim = SIM().load()
-    anos = list(range(2018, 2021))
 
-    for ano in anos:
-        arquivos = sim.get_files("CID10", uf="RS", year=ano)
-        sim.download(arquivos, local_dir=pasta)
+    arquivos = sim.get_files("CID10", uf="RS", year=2022)
+    sim.download(arquivos, local_dir=pasta)
 
     print("Download concluído!")
 

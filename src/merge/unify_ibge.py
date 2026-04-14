@@ -39,13 +39,25 @@ def unify_ibge():
     if drop_cols:
         df_unified.drop(columns=drop_cols, inplace=True)
     
-    df_unified['pib']   = df_unified['pib'].astype(int)
+    df_unified['pib']      = df_unified['pib'].astype(int)
     df_unified['populacao'] = df_unified['populacao'].astype(int)
-    
-    # Calcular PIB per capita
-    df_unified["pib_per_capita"] = df_unified["pib"] / df_unified['populacao']
 
-  
+    # Calcular PIB per capita
+    df_unified["pib_per_capita"] = df_unified["pib"] / df_unified["populacao"]
+
+    # Padronizar cod_municipio para 6 dígitos (remove dígito verificador)
+    df_unified["cod_municipio"] = (
+        df_unified["cod_mun"].astype(str).str[:6].astype(int)
+    )
+
+    # Limpar e renomear colunas
+    df_unified = df_unified.rename(columns={
+        "municipio_pib": "municipio",
+        "ano_pib": "ano",
+    })
+    df_unified = df_unified.drop(columns=["cod_mun"])
+    df_unified = df_unified[["cod_municipio", "municipio", "ano", "populacao", "pib", "pib_per_capita"]]
+
     # Salvar o resultado final na pasta 'processed'
     dir_processed = Path("data/processed/")
     dir_processed.mkdir(parents=True, exist_ok=True)

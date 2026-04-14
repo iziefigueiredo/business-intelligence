@@ -1,0 +1,11 @@
+O objetivo deste projeto é permitir que você consolide e exercite os conhecimentos abordados durante a disciplina por meio de um exemplo prático.  
+
+Dessa forma, o desafio proposto é construir uma solução de inteligência artificial completa a partir de diferentes fontes de dados oriundas de dados abertos.  
+
+O projeto está dividido em duas fases: 
+
+Fase 1: seleção de fontes de dados. 
+
+Fase  2: implementação das rotinas de extração, transformação e carga das fontes de dados, implementação da modelagem do cubo e criação de painéis de visualização de indicadores. 
+
+Atenção: seu trabalho deve ser autoral e individual.

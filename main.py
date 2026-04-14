@@ -31,10 +31,8 @@ def menu():
             if escolha == "1":
                 run_pipeline_sim()
             elif escolha == "2":
-                print("Pipeline do IBGE ainda não implementado. Por favor, escolha a opção 1.")
-                run_pipeline_ibge() 
+                run_pipeline_ibge()
             elif escolha == "3":
-                print("Pipeline do CNES ainda não implementado. Por favor, escolha a opção 1.")
                 run_pipeline_cnes()
             elif escolha == "0":
                 print("Encerrando o orquestrador.")

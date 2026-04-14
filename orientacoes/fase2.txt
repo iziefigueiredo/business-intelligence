@@ -1,0 +1,75 @@
+inalizada a fase 1, com base nas fontes de dados iniciais e nas fontes de dados complementares escolhidas, agora para a fase 2 você deverá entrar na ferramenta Power BI (download gratuito em https://powerbi.microsoft.com/pt-br/desktop/) e executar as seguintes atividades: 
+
+ 
+
+1. Extração, transformação e carga dos dados (“Obter dados”) para o Power BI. 
+
+ 
+
+          1.1. No Power BI, obtenha dados de uma fonte “Pasta de Trabalho do Excel”, abra o arquivo “RELATORIO_DTB_BRASIL_MUNICIPIO.xlsx”, salvo durante a Fase 1 do projeto, e renomeie a coluna “Código Município Completo” para “cod_municipio”. 
+
+          1.2. No Power BI, obtenha dados de uma fonte “Banco de dados do Access”, abra o arquivo “BR_Localidades_2010_v1.mdb” e renomeie a coluna “BR_Localidades_2010_v1.COD_GEOCODMU” para “cod_municipio”. 
+
+ 
+
+Note que somente algumas das colunas dessas duas fontes de dados precisarão ser utilizadas na construção da solução. Sugere-se, portanto, que ambas sejam extraídas, transformadas e carregadas para o Power BI de forma a gerar o seguinte esquema lógico na ferramenta: 
+
+ 
+
+8ec3e1b755ff9ba9a56ed2d4ea0c84ca.jpg
+
+ 
+
+          1.3. No Power BI, carregue também as duas outras fontes de dados complementares que você escolheu na Fase 1 do projeto e realize as transformações necessárias com vistas à geração do modelo multidimensional da sua solução de BI. ATENÇÃO: documente todas as transformações realizadas, pois farão parte da entrega da fase 2 deste trabalho. 
+
+ 
+
+2. Modelagem do cubo na guia “Exibição do modelo”. 
+
+ 
+
+3. Criação de painéis de indicadores: 
+
+          3.1. Pelo menos dois painéis de BI para cada persona descrita. 
+
+          3.2 Cada painel de BI deverá conter a representação visual (gráfica) apropriada de pelo menos dois indicadores que respondam adequadamente às questões de negócio formuladas para a persona correspondente. 
+
+          3.3 Pelo menos um indicador deverá ser apresentado na forma de um mapa utilizando as informações de latitude e longitude incluídas nas fontes de dados iniciais. 
+
+
+Quais aulas você precisa assistir para realizar a fase 2? Aulas 1 a 10.
+
+O que você precisa entregar? 
+
+
+Siga estas instruções cuidadosamente para garantir uma entrega adequada do seu projeto. Você deverá entregar uma pasta compactada no formato ZIP, que deve conter três elementos principais: 
+
+ 
+
+1. Nova versão do relatório em formato PDF incluindo as alterações nas seções de A a D que contemplem as observações efetuadas na correção da Fase 1. Acrescente ao relatório as seguintes seções: 
+
+ 
+
+E. Rotinas de ETL: descrição das rotinas de ETL realizadas, incluindo: transformações de cabeçalhos de coluna; transformações de tipos de dados; substituições de valores; resumos de colunas; outras transformações que tenham sido realizadas.
+
+ 
+
+F. Modelagem do cubo: captura da imagem da guia “Exibição do modelo” da ferramenta Power BI, complementada pela descrição da tabela fato e suas colunas, descrição das medidas e descrição das tabelas de dimensão e suas colunas.
+
+G. Painéis de indicadores: captura das telas do Power BI que apresentam cada um dos painéis de indicadores criados, juntamente com uma descrição para cada um dos indicadores que constam nos painéis e como eles se relacionam com as questões de negócio. 
+
+ 
+
+2. Arquivo do Power BI (formato .pbix). 
+
+ 
+
+3. Arquivos das fontes de dados e instruções para sua preparação no caso de fontes de dados baseadas em SGBD. 
+
+ 
+
+Observação sobre o Formato de Arquivo: Submeta seu arquivo EXCLUSIVAMENTE no formato ZIP. Outros formatos de arquivos compactados, como RAR, não serão aceitos. 
+
+ 
+
+Por favor, revise sua entrega para garantir que todas essas diretrizes tenham sido seguidas. Bons estudos! 
